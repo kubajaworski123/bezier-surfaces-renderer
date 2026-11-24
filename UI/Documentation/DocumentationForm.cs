@@ -20,7 +20,7 @@ namespace Projekt2GK.UI.Documentation
                 ScrollBars = ScrollBars.Vertical,
                 BackColor = SystemColors.Window,
                 Font = new Font("Segoe UI", 10f),
-                Text = content,
+                Text = content.ReplaceLineEndings("\r\n"),
             };
             Controls.Add(contentTextBox);
 
