@@ -1,8 +1,5 @@
 namespace Projekt2GK.Interaction
 {
-    /// <summary>
-    /// Przechowuje bieżący stan myszy i przekazuje mu zdarzenia z płótna.
-    /// </summary>
     public class MouseController
     {
         private IMouseState state;

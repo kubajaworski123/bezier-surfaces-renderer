@@ -1,8 +1,5 @@
 namespace Projekt2GK.UI.Documentation
 {
-    /// <summary>
-    /// Wspólne okno do wyświetlania tekstu dokumentacji (tylko do odczytu).
-    /// </summary>
     public class DocumentationForm : Form
     {
         private readonly TextBox contentTextBox;
@@ -27,7 +24,6 @@ namespace Projekt2GK.UI.Documentation
             };
             Controls.Add(contentTextBox);
 
-            // Bez tego cały tekst byłby zaznaczony po otwarciu okna.
             Shown += (_, _) => contentTextBox.Select(0, 0);
         }
     }

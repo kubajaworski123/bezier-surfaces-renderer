@@ -2,9 +2,6 @@ using Projekt2GK.Rendering.Stages;
 
 namespace Projekt2GK.Rendering
 {
-    /// <summary>
-    /// Potok renderowania: wykonuje po kolei włączone etapy.
-    /// </summary>
     public class RenderPipeline
     {
         private readonly IReadOnlyList<IRenderStage> stages;

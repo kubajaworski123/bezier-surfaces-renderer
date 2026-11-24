@@ -4,13 +4,8 @@ using Projekt2GK.Utils;
 
 namespace Projekt2GK.Interaction
 {
-    /// <summary>
-    /// Żaden przycisk nie jest wciśnięty. Naciśnięcie lewego przycisku na punkcie kontrolnym
-    /// krzywej światła rozpoczyna jego przeciąganie, a w każdym innym miejscu - obrót sceny.
-    /// </summary>
     public class IdleState : IMouseState
     {
-        /// <summary>Maksymalna odległość kursora od punktu kontrolnego (w pikselach), by go chwycić.</summary>
         private const float HitRadius = 8f;
 
         private readonly InteractionContext context;
@@ -36,7 +31,6 @@ namespace Projekt2GK.Interaction
 
         public IMouseState OnMouseUp(MouseEventArgs e) => this;
 
-        /// <summary>Indeks najbliższego punktu kontrolnego krzywej światła w promieniu chwytu, albo null.</summary>
         private int? FindCurvePointAt(Vector2 cursor)
         {
             Light light = context.Scene.Light;

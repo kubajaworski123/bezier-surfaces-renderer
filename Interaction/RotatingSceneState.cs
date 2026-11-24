@@ -2,10 +2,6 @@ using System.Numerics;
 
 namespace Projekt2GK.Interaction
 {
-    /// <summary>
-    /// Obrót sceny przeciąganiem myszy (arcball). Każde przesunięcie kursora daje przyrost obrotu
-    /// między poprzednią a bieżącą pozycją, składany z aktualną orientacją sceny.
-    /// </summary>
     public class RotatingSceneState : IMouseState
     {
         private readonly InteractionContext context;

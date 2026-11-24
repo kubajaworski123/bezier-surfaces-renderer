@@ -1,12 +1,7 @@
 namespace Projekt2GK.Geometry
 {
-    /// <summary>
-    /// Triangulacja powierzchni Béziera na regularnej siatce parametrów (u, v).
-    /// </summary>
     public static class Tessellator
     {
-        /// <param name="steps">Liczba podziałów na boku w kierunku u i v (co najmniej 1).</param>
-        /// <returns>Siatka z (steps + 1)^2 wierzchołkami i 2 * steps^2 trójkątami.</returns>
         public static Mesh Tessellate(BezierSurface surface, int steps)
         {
             ArgumentOutOfRangeException.ThrowIfLessThan(steps, 1);
@@ -23,7 +18,6 @@ namespace Projekt2GK.Geometry
                 }
             }
 
-            // Każdy prostokąt siatki parametrów dzielimy przekątną na dwa trójkąty.
             var triangles = new Triangle[2 * steps * steps];
             int t = 0;
             for (int i = 0; i < steps; i++)

@@ -1,8 +1,5 @@
 namespace Projekt2GK.Rendering.Stages
 {
-    /// <summary>
-    /// Czyści bufor kolorów i Z-bufor przed rysowaniem klatki.
-    /// </summary>
     public class ClearStage : IRenderStage
     {
         public const int BackgroundColor = unchecked((int)0xFFFFFFFF);

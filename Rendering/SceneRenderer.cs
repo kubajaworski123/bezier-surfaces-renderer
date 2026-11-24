@@ -4,9 +4,6 @@ using Projekt2GK.Rendering.Stages;
 
 namespace Projekt2GK.Rendering
 {
-    /// <summary>
-    /// Składa potok renderowania i rysuje scenę do bitmapy.
-    /// </summary>
     public sealed class SceneRenderer : IDisposable
     {
         private readonly RenderContext context;
@@ -22,14 +19,12 @@ namespace Projekt2GK.Rendering
                 new ClearStage(),
                 new FillStage(new EdgeBucketFiller()),
                 new PresentStage(),
-                // Nakładki rysowane funkcjami System.Drawing bezpośrednio na bitmapie, na wierzchu powierzchni.
                 new MeshOverlayStage(),
                 new ControlPolygonOverlayStage(),
                 new LightOverlayStage(),
             ]);
         }
 
-        /// <summary>Bitmapa, do której trafia każda narysowana klatka.</summary>
         public Bitmap Output => context.Output;
 
         public void Render() => pipeline.Run(context);

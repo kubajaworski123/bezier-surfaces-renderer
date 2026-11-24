@@ -1,11 +1,7 @@
 namespace Projekt2GK.UI.Documentation
 {
-    /// <summary>
-    /// Instrukcja obsługi programu.
-    /// </summary>
     public class UserManualForm : DocumentationForm
     {
-        // TODO: uzupełnić treść po zaimplementowaniu funkcjonalności.
         private const string Content =
             "INSTRUKCJA OBSŁUGI\r\n" +
             "\r\n" +

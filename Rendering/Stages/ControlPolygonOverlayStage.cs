@@ -4,9 +4,6 @@ using Projekt2GK.Model;
 
 namespace Projekt2GK.Rendering.Stages
 {
-    /// <summary>
-    /// Rysuje wielobok Béziera na gotowej bitmapie: punkty kontrolne połączone wzdłuż wierszy i kolumn siatki 4x4.
-    /// </summary>
     public class ControlPolygonOverlayStage : IRenderStage
     {
         private static readonly Color LineColor = Color.FromArgb(0x60, 0x60, 0x60);
@@ -27,7 +24,6 @@ namespace Projekt2GK.Rendering.Stages
 
             foreach (Surface surface in context.Scene.Surfaces)
             {
-                // 16 punktów obracamy na bieżąco - to tańsze niż przechowywanie ich kopii.
                 for (int i = 0; i < n; i++)
                     for (int j = 0; j < n; j++)
                         screen[i, j] = context.ToScreenPoint(Vector3.Transform(surface.Bezier.GetControlPoint(i, j), rotation));

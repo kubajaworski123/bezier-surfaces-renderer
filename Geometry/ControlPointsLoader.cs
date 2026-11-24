@@ -3,12 +3,6 @@ using System.Numerics;
 
 namespace Projekt2GK.Geometry
 {
-    /// <summary>
-    /// Wczytuje powierzchnie Béziera z pliku tekstowego.
-    /// Każdy niepusty wiersz to jeden punkt kontrolny "x y z"; kolejne grupy po 16 wierszy
-    /// opisują kolejne powierzchnie. Puste wiersze są pomijane.
-    /// Liczby muszą używać kropki jako separatora dziesiętnego.
-    /// </summary>
     public static class ControlPointsLoader
     {
         public const string DefaultFilePath = "Assets/surfaces.txt";

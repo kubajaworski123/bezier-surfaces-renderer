@@ -3,10 +3,6 @@ using Projekt2GK.Utils;
 
 namespace Projekt2GK.Interaction
 {
-    /// <summary>
-    /// Przeciąganie punktu kontrolnego krzywej, po której porusza się światło.
-    /// Krzywa leży w układzie obserwatora, więc pozycja kursora przekłada się wprost na x, y punktu.
-    /// </summary>
     public class DraggingCurvePointState : IMouseState
     {
         private readonly InteractionContext context;

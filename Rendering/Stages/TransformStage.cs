@@ -3,10 +3,6 @@ using Projekt2GK.Model;
 
 namespace Projekt2GK.Rendering.Stages
 {
-    /// <summary>
-    /// Obrót wierzchołków siatek zgodnie z orientacją sceny. Siatka jest obracana tylko wtedy,
-    /// gdy orientacja zmieniła się od ostatniego obrotu albo siatka jest nowa.
-    /// </summary>
     public class TransformStage : IRenderStage
     {
         public bool IsEnabled(RenderContext context) => true;

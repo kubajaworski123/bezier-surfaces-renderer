@@ -14,7 +14,6 @@ namespace Projekt2GK.UI
         private readonly SceneRenderer renderer;
         private readonly MouseController mouseController;
 
-        /// <summary>Okres timera animacji (~60 kroków na sekundę).</summary>
         private const int AnimationIntervalMs = 16;
         private readonly System.Windows.Forms.Timer animationTimer;
         private readonly System.Diagnostics.Stopwatch animationClock = new();
@@ -24,7 +23,6 @@ namespace Projekt2GK.UI
         private readonly Texture? defaultTexture;
         private readonly NormalMap? defaultNormalMap;
 
-        /// <summary>Ustawiana na czas programowego ustawiania kontrolek materiału.</summary>
         private bool updatingMaterialControls;
 
         public MainForm()
@@ -46,8 +44,6 @@ namespace Projekt2GK.UI
                 renderer.Dispose();
             };
 
-            // Domyślna tekstura i mapa normalnych. Brak plików nie blokuje programu -
-            // można wtedy wczytać własne przyciskami w panelu.
             defaultTexture = TryLoadImage(Path.Combine(AppContext.BaseDirectory, DefaultTexturePath), Texture.Load);
             defaultNormalMap = TryLoadImage(Path.Combine(AppContext.BaseDirectory, DefaultNormalMapPath), NormalMap.Load);
 
@@ -57,19 +53,13 @@ namespace Projekt2GK.UI
             UpdateAnimationState();
         }
 
-        /// <summary>Powierzchnia wybrana w comboboxie (której dotyczą ustawienia materiału).</summary>
         private Surface? SelectedSurface =>
             surfaceComboBox.SelectedIndex >= 0 && surfaceComboBox.SelectedIndex < scene.Surfaces.Count
                 ? scene.Surfaces[surfaceComboBox.SelectedIndex]
                 : null;
 
-        /// <summary>
-        /// Oznacza obraz jako nieaktualny. Klatka zostanie narysowana przy najbliższym odświeżeniu
-        /// płótna (<see cref="RenderCanvas"/>), raz - niezależnie od liczby wywołań.
-        /// </summary>
         private void InvalidateView() => canvas.Invalidate();
 
-        /// <summary>Przepisuje stan kontrolek panelu do ustawień renderowania.</summary>
         private void ApplySettingsFromControls()
         {
             settings.TriangulationSteps = stepsTrackBar.Value;
@@ -85,7 +75,6 @@ namespace Projekt2GK.UI
 
         #region Animacja światła
 
-        /// <summary>Włącza lub wyłącza animację zgodnie z checkboxem.</summary>
         private void UpdateAnimationState()
         {
             if (animateLightCheckBox.Checked)
@@ -101,7 +90,6 @@ namespace Projekt2GK.UI
 
         private void AnimationTimer_Tick(object? sender, EventArgs e)
         {
-            // Czas od poprzedniego kroku - prędkość światła nie zależy od tego, jak często przychodzą tyknięcia.
             float elapsedSeconds = (float)animationClock.Elapsed.TotalSeconds;
             animationClock.Restart();
 
@@ -117,7 +105,6 @@ namespace Projekt2GK.UI
             InvalidateView();
         }
 
-        /// <summary>Spacja zatrzymuje i wznawia animację, niezależnie od tego, która kontrolka ma fokus.</summary>
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.Space)
@@ -130,16 +117,12 @@ namespace Projekt2GK.UI
 
         #endregion
 
-        /// <summary>Okno wyboru koloru; zwraca null, gdy użytkownik anuluje.</summary>
         private Color? PickColor(Color initial)
         {
             using var dialog = new ColorDialog { Color = initial, FullOpen = true };
             return dialog.ShowDialog(this) == DialogResult.OK ? dialog.Color : null;
         }
 
-        /// <summary>
-        /// Wczytuje powierzchnie z pliku. Przy błędzie pokazuje komunikat i zostawia poprzednią scenę.
-        /// </summary>
         private void TryLoadSurfaces(string path)
         {
             IReadOnlyList<BezierSurface> surfaces;
@@ -201,10 +184,6 @@ namespace Projekt2GK.UI
 
         #region Materiał wybranej powierzchni
 
-        /// <summary>
-        /// Ustawia kontrolki materiału zgodnie z wybraną powierzchnią. Flaga blokuje obsługę zdarzeń
-        /// wywołanych samym ustawianiem kontrolek, żeby nie nadpisywały materiału.
-        /// </summary>
         private void UpdateMaterialControls()
         {
             if (SelectedSurface is not { } surface)
@@ -279,7 +258,6 @@ namespace Projekt2GK.UI
             InvalidateView();
         }
 
-        /// <summary>Okno wyboru pliku obrazu; zwraca null, gdy użytkownik anuluje.</summary>
         private string? PickImageFile(string title)
         {
             using var dialog = new OpenFileDialog
@@ -290,10 +268,6 @@ namespace Projekt2GK.UI
             return dialog.ShowDialog(this) == DialogResult.OK ? dialog.FileName : null;
         }
 
-        /// <summary>
-        /// Wczytuje obraz (teksturę lub mapę normalnych). Przy błędzie pokazuje komunikat
-        /// (jeśli <paramref name="showErrors"/>) i zwraca null.
-        /// </summary>
         private T? TryLoadImage<T>(string path, Func<string, T> load, bool showErrors = true) where T : class
         {
             try

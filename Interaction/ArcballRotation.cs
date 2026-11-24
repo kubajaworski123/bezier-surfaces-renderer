@@ -3,19 +3,10 @@ using Projekt2GK.Utils;
 
 namespace Projekt2GK.Interaction
 {
-    /// <summary>
-    /// Arcball (K. Shoemake): zamiana ruchu myszy na przyrost obrotu 3D.
-    /// Pozycja kursora jest rzutowana na półsferę o środku w środku płótna. Przyrost obrotu
-    /// to obrót przenoszący poprzedni punkt sfery na bieżący: oś = p0 x p1, kąt = acos(p0 · p1).
-    /// </summary>
     public static class ArcballRotation
     {
         private const float MinAxisLength = 1e-6f;
 
-        /// <summary>
-        /// Rzutuje punkt płótna na sferę jednostkową w układzie sceny (x w prawo, y w górę, z do obserwatora).
-        /// Promień sfery to połowa krótszego boku płótna. Punkty poza okręgiem trafiają na równik (z = 0).
-        /// </summary>
         public static Vector3 MapToSphere(Point screenPoint, Size canvasSize)
         {
             float radius = Math.Min(canvasSize.Width, canvasSize.Height) / 2f;
@@ -30,9 +21,6 @@ namespace Projekt2GK.Interaction
             return new Vector3(x / length, y / length, 0f);
         }
 
-        /// <summary>
-        /// Przyrost obrotu przenoszący wersor <paramref name="from"/> na wersor <paramref name="to"/>.
-        /// </summary>
         public static Quaternion ComputeDelta(Vector3 from, Vector3 to)
         {
             Vector3 axis = Vector3.Cross(from, to);

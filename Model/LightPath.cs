@@ -3,10 +3,6 @@ using Projekt2GK.Geometry;
 
 namespace Projekt2GK.Model
 {
-    /// <summary>
-    /// Zamknięta krzywa Béziera 6. stopnia (7 punktów, V6 = V0), po której porusza się źródło światła.
-    /// Leży na płaszczyźnie z = const; tutaj przechowywane są tylko współrzędne x, y.
-    /// </summary>
     public class LightPath
     {
         public const int ControlPointCount = 7;
@@ -20,7 +16,7 @@ namespace Projekt2GK.Model
             new(-1.7f, 0f),
             new(-0.6f, -1.7f),
             new(1.6f, -1.6f),
-            new(1.3f, 0f), // V6 = V0
+            new(1.3f, 0f),
         ];
 
         private readonly Vector2[] controlPoints = (Vector2[])DefaultControlPoints.Clone();
@@ -29,9 +25,6 @@ namespace Projekt2GK.Model
 
         public Vector2 Evaluate(float t) => BezierCurve.Evaluate(controlPoints, t);
 
-        /// <summary>
-        /// Przesuwa punkt kontrolny. Punkty V0 i V6 przesuwają się razem, żeby krzywa pozostała zamknięta.
-        /// </summary>
         public void MoveControlPoint(int index, Vector2 position)
         {
             controlPoints[index] = position;

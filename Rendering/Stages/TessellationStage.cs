@@ -3,10 +3,6 @@ using Projekt2GK.Model;
 
 namespace Projekt2GK.Rendering.Stages
 {
-    /// <summary>
-    /// Triangulacja powierzchni. Siatka jest liczona od nowa tylko wtedy,
-    /// gdy jej brak lub zmieniła się dokładność triangulacji.
-    /// </summary>
     public class TessellationStage : IRenderStage
     {
         public bool IsEnabled(RenderContext context) => true;

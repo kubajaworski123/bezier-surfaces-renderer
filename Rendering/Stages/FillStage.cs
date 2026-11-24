@@ -7,17 +7,6 @@ using Projekt2GK.Utils;
 
 namespace Projekt2GK.Rendering.Stages
 {
-    /// <summary>
-    /// Wypełnia rzutowane trójkąty siatek do bufora kolorów, z Z-buforem i oświetleniem per piksel.
-    ///
-    /// Każdy trójkąt jest wypełniany niezależnie. Algorytm wypełniania (<see cref="IPolygonFiller"/>)
-    /// wyznacza odcinki scanlinii; dla każdego piksela odcinka liczone są współrzędne barycentryczne
-    /// jego środka, z nich interpolowane są punkt (w tym z) i wektor normalny, a następnie
-    /// wykonywany jest test Z-bufora i obliczenie koloru.
-    ///
-    /// Rzut jest prostokątny (afiniczny), więc liniowa interpolacja w przestrzeni ekranu
-    /// daje dokładne wartości 3D - korekcja perspektywy nie jest potrzebna.
-    /// </summary>
     public sealed class FillStage : IRenderStage
     {
         private const float MinDoubleArea = 1e-6f;
@@ -26,8 +15,6 @@ namespace Projekt2GK.Rendering.Stages
         private readonly SpanCallback shadeSpan;
         private readonly Vector2[] screenVertices = new Vector2[3];
 
-        // Dane bieżącej klatki i bieżącego trójkąta, używane przez ShadeSpan.
-        // Trzymane w polach, aby nie tworzyć nowego delegata (i alokacji) dla każdego trójkąta.
         private RenderContext context = null!;
         private LightingParameters lighting;
         private IColorSource colorSource = null!;
@@ -35,7 +22,6 @@ namespace Projekt2GK.Rendering.Stages
         private Triangle triangle;
         private float inverseDoubleArea;
 
-        /// <summary>Zmiana (λa, λb, λc) przy przejściu o jeden piksel w prawo - stała dla trójkąta.</summary>
         private Vector3 lambdaStepX;
 
         public FillStage(IPolygonFiller filler)
@@ -75,7 +61,6 @@ namespace Projekt2GK.Rendering.Stages
             screenVertices[1] = context.ToScreen(t.B.RotatedPosition);
             screenVertices[2] = context.ToScreen(t.C.RotatedPosition);
 
-            // Trójkąt widziany z boku (pole ~0) nie zajmuje żadnego piksela, a dzielenie przez pole byłoby niestabilne.
             float doubleArea = GeometryUtils.CrossProduct2D(screenVertices[1] - screenVertices[0], screenVertices[2] - screenVertices[0]);
             if (MathF.Abs(doubleArea) < MinDoubleArea)
                 return;
@@ -93,8 +78,6 @@ namespace Projekt2GK.Rendering.Stages
             Vertex a = triangle.A, b = triangle.B, c = triangle.C;
             Vector2 sa = screenVertices[0], sb = screenVertices[1], sc = screenVertices[2];
 
-            // Współrzędne barycentryczne są liniowe względem położenia piksela: pełnym wzorem liczymy je
-            // tylko dla pierwszego piksela odcinka, a dla kolejnych dodajemy stały przyrost (jak 1/m w ET/AET).
             Vector3 lambda = GeometryUtils.Barycentric(new Vector2(xStart + 0.5f, y + 0.5f), sa, sb, sc, inverseDoubleArea);
             Vector3 step = lambdaStepX;
 
@@ -103,7 +86,6 @@ namespace Projekt2GK.Rendering.Stages
 
             for (int x = xStart; x < xEnd; x++, lambda += step)
             {
-                // Najpierw tylko z - jeśli piksel jest zasłonięty, nie liczymy oświetlenia.
                 float z = GeometryUtils.Interpolate(lambda, a.RotatedPosition.Z, b.RotatedPosition.Z, c.RotatedPosition.Z);
                 int index = rowStart + x;
                 if (!depth.TryUpdate(index, z))
@@ -115,7 +97,6 @@ namespace Projekt2GK.Rendering.Stages
                 float u = GeometryUtils.Interpolate(lambda, a.U, b.U, c.U);
                 float v = GeometryUtils.Interpolate(lambda, a.V, b.V, c.V);
 
-                // Pu i Pv są potrzebne tylko mapie normalnych - bez niej nie tracimy czasu na ich interpolację.
                 Vector3 tangentU = Vector3.Zero, tangentV = Vector3.Zero;
                 if (needsTangents)
                 {

@@ -3,10 +3,6 @@ using Projekt2GK.Utils;
 
 namespace Projekt2GK.Geometry
 {
-    /// <summary>
-    /// Krzywa Béziera dowolnego stopnia na płaszczyźnie: P(t) = sum_i V_i · B(i, n)(t), t z [0, 1],
-    /// gdzie n + 1 to liczba punktów kontrolnych.
-    /// </summary>
     public static class BezierCurve
     {
         public static Vector2 Evaluate(IReadOnlyList<Vector2> controlPoints, float t)

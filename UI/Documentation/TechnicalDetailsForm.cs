@@ -1,11 +1,7 @@
 namespace Projekt2GK.UI.Documentation
 {
-    /// <summary>
-    /// Opis techniczny rozwiązania, w szczególności obrotu sceny myszą (arcball).
-    /// </summary>
     public class TechnicalDetailsForm : DocumentationForm
     {
-        // TODO: uzupełnić treść po zaimplementowaniu funkcjonalności.
         private const string Content =
             "OPIS TECHNICZNY\r\n" +
             "\r\n" +
